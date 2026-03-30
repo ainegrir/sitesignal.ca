@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, 'Segoe UI', Roboto, sans-serif; background: #f1f5f9; padding: 32px; color: #1e293b; }
+.email { max-width: 640px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,.08); }
+.header { background: linear-gradient(135deg, #0f172a, #1e3a5f); padding: 28px 32px; }
+.logo { font-size: 20px; font-weight: 800; color: white; letter-spacing: -.02em; margin-bottom: 4px; }
+.logo span { color: #f59e0b; }
+.header-sub { font-size: 13px; color: rgba(255,255,255,.6); }
+.header-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,.1); }
+.header-meta span { font-size: 12px; color: rgba(255,255,255,.5); }
+.badge { background: rgba(245,158,11,.15); color: #fbbf24; font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 999px; }
+.section { padding: 24px 32px; border-bottom: 1px solid #f1f5f9; }
+.section:last-of-type { border-bottom: none; }
+.section-head { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+.section-icon { font-size: 16px; }
+.section-title { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: #475569; }
+.section-count { font-size: 12px; color: #94a3b8; margin-left: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { text-align: left; padding: 8px 10px; background: #f8fafc; color: #64748b; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: .04em; }
+td { padding: 12px 10px; border-bottom: 1px solid #f1f5f9; }
+tr:last-child td { border-bottom: none; }
+.tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: .03em; }
+.tag-new { background: #ecfdf5; color: #047857; }
+.tag-add { background: #eff6ff; color: #1d4ed8; }
+.tag-basement { background: #fef3c7; color: #92400e; }
+.tag-hvac { background: #e0e7ff; color: #4338ca; }
+.tag-deck { background: #fce7f3; color: #9d174d; }
+.tag-demo { background: #fee2e2; color: #991b1b; }
+.tag-comm { background: #f3e8ff; color: #6b21a8; }
+.value { font-family: 'SF Mono', 'Consolas', monospace; font-weight: 600; color: #0f172a; }
+
+/* Storm alerts */
+.storm-card { border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
+.storm-card:last-child { margin-bottom: 0; }
+.storm-red { border: 1px solid #fecaca; background: #fef2f2; }
+.storm-yellow { border: 1px solid #fde68a; background: #fffbeb; }
+.storm-head { padding: 12px 16px; display: flex; align-items: center; gap: 10px; }
+.storm-red .storm-head { background: #fee2e2; }
+.storm-yellow .storm-head { background: #fef3c7; }
+.storm-severity { font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; }
+.storm-red .storm-severity { background: #dc2626; color: white; }
+.storm-yellow .storm-severity { background: #d97706; color: white; }
+.storm-title { font-size: 14px; font-weight: 700; }
+.storm-body { padding: 12px 16px; font-size: 13px; color: #475569; line-height: 1.6; }
+.storm-body strong { color: #1e293b; }
+.storm-action { background: #f8fafc; padding: 10px 16px; font-size: 12px; font-weight: 600; color: #1d4ed8; border-top: 1px solid #e2e8f0; }
+
+/* Property leads */
+.lead-card { border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 16px; margin-bottom: 10px; display: flex; align-items: center; gap: 14px; transition: border-color .15s; }
+.lead-card:last-of-type { margin-bottom: 0; }
+.lead-lock { font-size: 20px; min-width: 28px; }
+.lead-info { flex: 1; }
+.lead-addr { font-size: 13px; font-weight: 600; color: #1e293b; }
+.lead-detail { font-size: 12px; color: #64748b; margin-top: 2px; }
+.lead-score { text-align: center; }
+.lead-score-num { font-size: 18px; font-weight: 800; color: #0f172a; }
+.lead-score-label { font-size: 10px; color: #94a3b8; text-transform: uppercase; }
+.reveal-btn { background: #2563eb; color: white; font-size: 12px; font-weight: 700; padding: 8px 16px; border-radius: 6px; border: none; cursor: pointer; white-space: nowrap; }
+.leads-meter { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 16px; margin-top: 14px; display: flex; align-items: center; gap: 12px; }
+.meter-bar { flex: 1; height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden; }
+.meter-fill { height: 100%; background: #2563eb; border-radius: 3px; width: 0%; }
+.meter-text { font-size: 12px; color: #64748b; font-weight: 500; white-space: nowrap; }
+
+/* Zoning */
+.zoning-card { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 3px solid #8b5cf6; border-radius: 8px; padding: 16px; }
+.zoning-title { font-size: 14px; font-weight: 700; color: #1e293b; margin-bottom: 4px; }
+.zoning-meta { font-size: 12px; color: #64748b; line-height: 1.6; }
+.zoning-timeline { display: inline-block; background: #ede9fe; color: #6d28d9; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; margin-top: 8px; }
+
+/* News */
+.news-item { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f1f5f9; font-size: 13px; }
+.news-item:last-child { border-bottom: none; }
+.news-source { min-width: 56px; font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; }
+.news-text { color: #475569; }
+.news-text strong { color: #1e293b; }
+
+.footer { background: #f8fafc; padding: 20px 32px; text-align: center; }
+.footer-text { font-size: 11px; color: #94a3b8; line-height: 1.6; }
+.footer-text a { color: #3b82f6; }
+.footer-warn { font-size: 10px; color: #94a3b8; margin-top: 8px; font-style: italic; }
+.plan-badge { display: inline-block; background: linear-gradient(135deg, #f59e0b, #d97706); color: white; font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 4px; margin-bottom: 8px; }
+.more-row td { color: #94a3b8; font-style: italic; font-size: 12px; padding: 10px; }
+.divider { height: 1px; background: linear-gradient(90deg, transparent, #e2e8f0, transparent); margin: 0; }
+
+/* Owner info in lead cards */
+.lead-owner { font-size: 11px; color: #94a3b8; margin-top: 4px; }
+
+/* Filter profile bar */
+.filter-bar { background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 14px; margin-bottom: 18px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.filter-bar-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #64748b; white-space: nowrap; margin-right: 4px; }
+.filter-chip { display: inline-block; background: #e0e7ff; color: #3730a3; font-size: 10px; font-weight: 600; padding: 2px 9px; border-radius: 999px; letter-spacing: .02em; }
+
+/* DNCL disclaimer */
+.dncl-note { font-size: 10px; color: #94a3b8; margin-top: 10px; line-height: 1.5; }
+</style>
+</head>
+<body>
+<div class="email">
+  <div class="header">
+    <div class="logo">Site<span>Signal</span> <span style="font-size:11px; color:rgba(255,255,255,.4); font-weight:400;">GROWTH</span></div>
+    <div class="header-sub">Construction Demand Intelligence — Full Report</div>
+    <div class="header-meta">
+      <span>GTA + Hamilton · All Trades · Mar 23–28, 2026</span>
+      <span class="badge">47 leads · 4 signal types</span>
+    </div>
+  </div>
+
+  <!-- PERMITS -->
+  <div class="section">
+    <div class="plan-badge">GROWTH PLAN</div>
+    <div class="filter-bar">
+      <span class="filter-bar-label">Your Filters:</span>
+      <span class="filter-chip">HVAC</span>
+      <span class="filter-chip">GTA + Hamilton</span>
+      <span class="filter-chip">Furnace ≥15yr</span>
+      <span class="filter-chip">A/C ≥12yr</span>
+      <span class="filter-chip">Wind ≥80km/h</span>
+      <span class="filter-chip">Rain ≥50mm</span>
+    </div>
+    <div class="section-head">
+      <span class="section-icon">📋</span>
+      <span class="section-title">Building Permits</span>
+      <span class="section-count">23 new across GTA + Hamilton</span>
+    </div>
+    <table>
+      <thead>
+        <tr><th>Address</th><th>Type</th><th>Est. Value</th><th>Issued</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>847 Queen St W, Toronto</td>
+          <td><span class="tag tag-new">New Build</span></td>
+          <td class="value">$485,000</td>
+          <td>Mar 24</td>
+        </tr>
+        <tr>
+          <td>2210 Bloor St W, Toronto</td>
+          <td><span class="tag tag-add">Addition</span></td>
+          <td class="value">$145,000</td>
+          <td>Mar 24</td>
+        </tr>
+        <tr>
+          <td>420 Main St E, Hamilton</td>
+          <td><span class="tag tag-demo">Demolition</span></td>
+          <td class="value">$310,000</td>
+          <td>Mar 25</td>
+        </tr>
+        <tr>
+          <td>55 Danforth Ave, Toronto</td>
+          <td><span class="tag tag-basement">Basement</span></td>
+          <td class="value">$48,200</td>
+          <td>Mar 25</td>
+        </tr>
+        <tr>
+          <td>1890 Lawrence Ave E, Scarborough</td>
+          <td><span class="tag tag-hvac">HVAC</span></td>
+          <td class="value">$22,500</td>
+          <td>Mar 25</td>
+        </tr>
+        <tr>
+          <td>75 King William St, Hamilton</td>
+          <td><span class="tag tag-comm">Commercial</span></td>
+          <td class="value">$195,000</td>
+          <td>Mar 26</td>
+        </tr>
+        <tr class="more-row"><td colspan="4">+ 17 more permits in GTA + Hamilton this week →</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- STORM ALERTS -->
+  <div class="section">
+    <div class="section-head">
+      <span class="section-icon">⚡</span>
+      <span class="section-title">Storm Alerts</span>
+      <span class="section-count">2 events this week</span>
+    </div>
+
+    <div class="storm-card storm-red">
+      <div class="storm-head">
+        <span class="storm-severity">Critical</span>
+        <span class="storm-title">Wind 95 km/h — Etobicoke / Mississauga</span>
+      </div>
+      <div class="storm-body">
+        <strong>Date:</strong> March 21, 2026<br>
+        <strong>Affected zone:</strong> ~12,000 homes in Etobicoke South, Lakeshore, Port Credit<br>
+        <strong>Expected damage:</strong> Roof shingles, siding, gutters, fencing<br>
+        <strong>Insurance window:</strong> Claims typically filed within 30 days
+      </div>
+      <div class="storm-action">🎯 Action: Contact homeowners in affected area — first contractor wins the job</div>
+    </div>
+
+    <div class="storm-card storm-yellow">
+      <div class="storm-head">
+        <span class="storm-severity">Watch</span>
+        <span class="storm-title">Heavy Rain 52mm — Hamilton / Burlington</span>
+      </div>
+      <div class="storm-body">
+        <strong>Date:</strong> March 27, 2026<br>
+        <strong>Flood-prone areas:</strong> Dundas, Westdale, East Hamilton (Barton St corridor)<br>
+        <strong>Expected impact:</strong> Basement flooding in low-lying areas<br>
+        <strong>Renovation demand:</strong> Expected spike in 2-4 weeks
+      </div>
+      <div class="storm-action">🎯 Action: Prepare quotes for basement waterproofing and renovation in these areas</div>
+    </div>
+  </div>
+
+  <!-- PROPERTY AGING LEADS -->
+  <div class="section">
+    <div class="section-head">
+      <span class="section-icon">🏠</span>
+      <span class="section-title">Property Aging Leads</span>
+      <span class="section-count">11 new this week</span>
+    </div>
+
+    <div class="lead-card">
+      <span class="lead-lock">🔒</span>
+      <div class="lead-info">
+        <div class="lead-addr">1xx Maple Dr, Mississauga</div>
+        <div class="lead-detail">Furnace: 2011 (15 years) · Listed on Realtor.ca</div>
+        <div class="lead-owner">👤 Owner: J. Smith · (905) 555-●●●●</div>
+      </div>
+      <div class="lead-score">
+        <div class="lead-score-num">8</div>
+        <div class="lead-score-label">Score</div>
+      </div>
+      <button class="reveal-btn">Reveal →</button>
+    </div>
+
+    <div class="lead-card">
+      <span class="lead-lock">🔒</span>
+      <div class="lead-info">
+        <div class="lead-addr">3xx Oak Ave, Brampton</div>
+        <div class="lead-detail">Roof shingles: 2008 (18 years) · Listed on HouseSigma</div>
+        <div class="lead-owner">👤 Owner: M. Patel · (647) 555-●●●●</div>
+      </div>
+      <div class="lead-score">
+        <div class="lead-score-num">9</div>
+        <div class="lead-score-label">Score</div>
+      </div>
+      <button class="reveal-btn">Reveal →</button>
+    </div>
+
+    <div class="lead-card">
+      <span class="lead-lock">🔒</span>
+      <div class="lead-info">
+        <div class="lead-addr">7xx Pine Cres, Hamilton</div>
+        <div class="lead-detail">A/C unit: 2013 (13 years) + Furnace: 2011 (15 years)</div>
+        <div class="lead-owner">👤 Owner: R. Williams · (289) 555-●●●●</div>
+      </div>
+      <div class="lead-score">
+        <div class="lead-score-num">9</div>
+        <div class="lead-score-label">Score</div>
+      </div>
+      <button class="reveal-btn">Reveal →</button>
+    </div>
+
+    <div class="lead-card">
+      <span class="lead-lock">🔒</span>
+      <div class="lead-info">
+        <div class="lead-addr">9xx Elm St, Oakville</div>
+        <div class="lead-detail">Water heater: 2015 (11 years) · Gas tank model</div>
+        <div class="lead-owner">👤 Owner: S. Chen · Phone unavailable</div>
+      </div>
+      <div class="lead-score">
+        <div class="lead-score-num">7</div>
+        <div class="lead-score-label">Score</div>
+      </div>
+      <button class="reveal-btn">Reveal →</button>
+    </div>
+
+    <div class="lead-card">
+      <span class="lead-lock">🔒</span>
+      <div class="lead-info">
+        <div class="lead-addr">2xx Cedar Rd, Burlington</div>
+        <div class="lead-detail">Furnace: 2010 (16 yrs) + A/C: 2012 (14 yrs) — combo deal</div>
+        <div class="lead-owner">👤 Owner: D. Thompson · (905) 555-●●●●</div>
+      </div>
+      <div class="lead-score">
+        <div class="lead-score-num">10</div>
+        <div class="lead-score-label">Score</div>
+      </div>
+      <button class="reveal-btn">Reveal →</button>
+    </div>
+
+    <div style="color: #94a3b8; font-size: 12px; font-style: italic; margin-top: 10px;">+ 6 more property leads available this week</div>
+
+    <div class="leads-meter">
+      <span class="meter-text">Reveals used</span>
+      <div class="meter-bar"><div class="meter-fill"></div></div>
+      <span class="meter-text" style="font-weight: 700; color: #1e293b;">0 / 50</span>
+    </div>
+    <div class="dncl-note">⚠️ Verify phone numbers against the National Do Not Call List before calling.</div>
+  </div>
+
+  <!-- ZONING -->
+  <div class="section">
+    <div class="section-head">
+      <span class="section-icon">🔭</span>
+      <span class="section-title">Zoning & Planning</span>
+      <span class="section-count">1 new application</span>
+    </div>
+
+    <div class="zoning-card">
+      <div class="zoning-title">1200 Dundas St W, Mississauga</div>
+      <div class="zoning-meta">
+        <strong>Application:</strong> Zoning Amendment — Residential to Mixed-Use (48 units)<br>
+        <strong>Stage:</strong> Public meeting scheduled April 15, 2026<br>
+        <strong>Developer:</strong> Pinnacle Developments Inc.
+      </div>
+      <div class="zoning-timeline">📅 Permit expected: Q4 2026 — Subcontractor demand in 8-12 months</div>
+    </div>
+  </div>
+
+  <!-- NEWS -->
+  <div class="section">
+    <div class="section-head">
+      <span class="section-icon">📰</span>
+      <span class="section-title">News & Social</span>
+      <span class="section-count">3 relevant mentions</span>
+    </div>
+
+    <div class="news-item">
+      <span class="news-source">Reddit</span>
+      <span class="news-text"><strong>r/Hamilton:</strong> "Massive flooding on Barton St — anyone know a good basement contractor?" (Mar 27, 45 upvotes)</span>
+    </div>
+    <div class="news-item">
+      <span class="news-source">CBC</span>
+      <span class="news-text"><strong>CBC Hamilton:</strong> "Several homes flooded in east Hamilton after overnight storms" (Mar 28)</span>
+    </div>
+    <div class="news-item">
+      <span class="news-source">CTV</span>
+      <span class="news-text"><strong>CTV Toronto:</strong> "Etobicoke residents report roof damage from Wednesday wind storm" (Mar 22)</span>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-text">
+      SiteSignal Growth · GTA + Hamilton · All Trades<br>
+      <a href="#">Manage subscription</a> · <a href="#">Unsubscribe</a> · <a href="#">Terms of Service</a><br>
+    </div>
+    <div class="footer-warn">Property intelligence data is non-refundable once delivered. Reports viewable for 30 days.</div>
+    <div class="footer-text" style="margin-top: 8px;">© 2026 L Consulting · sitesignal.ca · London, ON</div>
+  </div>
+</div>
+</body>
+</html>

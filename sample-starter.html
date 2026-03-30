@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, 'Segoe UI', Roboto, sans-serif; background: #f1f5f9; padding: 32px; color: #1e293b; }
+.email { max-width: 640px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,.08); }
+.header { background: linear-gradient(135deg, #0f172a, #1e3a5f); padding: 28px 32px; }
+.logo { font-size: 20px; font-weight: 800; color: white; letter-spacing: -.02em; margin-bottom: 4px; }
+.logo span { color: #60a5fa; }
+.header-sub { font-size: 13px; color: rgba(255,255,255,.6); }
+.header-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,.1); }
+.header-meta span { font-size: 12px; color: rgba(255,255,255,.5); }
+.badge { background: rgba(16,185,129,.15); color: #34d399; font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 999px; }
+.section { padding: 24px 32px; border-bottom: 1px solid #f1f5f9; }
+.section:last-of-type { border-bottom: none; }
+.section-head { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+.section-icon { font-size: 16px; }
+.section-title { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: #475569; }
+.section-count { font-size: 12px; color: #94a3b8; margin-left: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { text-align: left; padding: 8px 10px; background: #f8fafc; color: #64748b; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: .04em; }
+td { padding: 12px 10px; border-bottom: 1px solid #f1f5f9; }
+tr:last-child td { border-bottom: none; }
+.tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: .03em; }
+.tag-new { background: #ecfdf5; color: #047857; }
+.tag-add { background: #eff6ff; color: #1d4ed8; }
+.tag-basement { background: #fef3c7; color: #92400e; }
+.tag-hvac { background: #e0e7ff; color: #4338ca; }
+.tag-deck { background: #fce7f3; color: #9d174d; }
+.value { font-family: 'SF Mono', 'Consolas', monospace; font-weight: 600; color: #0f172a; }
+.weather-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; }
+.weather-item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; font-size: 13px; color: #475569; }
+.weather-item:not(:last-child) { border-bottom: 1px solid #f1f5f9; }
+.weather-icon { font-size: 16px; min-width: 20px; }
+.weather-note { background: #ecfdf5; color: #047857; font-size: 12px; padding: 10px 14px; border-radius: 6px; margin-top: 12px; font-weight: 500; }
+.footer { background: #f8fafc; padding: 20px 32px; text-align: center; }
+.footer-text { font-size: 11px; color: #94a3b8; line-height: 1.6; }
+.footer-text a { color: #3b82f6; }
+.plan-badge { display: inline-block; background: #dbeafe; color: #1d4ed8; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 4px; margin-bottom: 8px; }
+.more-row td { color: #94a3b8; font-style: italic; font-size: 12px; padding: 10px; }
+</style>
+</head>
+<body>
+<div class="email">
+  <div class="header">
+    <div class="logo">Site<span>Signal</span></div>
+    <div class="header-sub">Construction Demand Intelligence</div>
+    <div class="header-meta">
+      <span>Toronto · HVAC · Week of Mar 23–28, 2026</span>
+      <span class="badge">15 new leads</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="plan-badge">STARTER PLAN</div>
+    <div class="section-head">
+      <span class="section-icon">📋</span>
+      <span class="section-title">Building Permits</span>
+      <span class="section-count">12 new this week</span>
+    </div>
+    <table>
+      <thead>
+        <tr><th>Address</th><th>Type</th><th>Est. Value</th><th>Issued</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>847 Queen St W, Toronto</td>
+          <td><span class="tag tag-new">New Build</span></td>
+          <td class="value">$485,000</td>
+          <td>Mar 24</td>
+        </tr>
+        <tr>
+          <td>2210 Bloor St W, Toronto</td>
+          <td><span class="tag tag-add">Addition</span></td>
+          <td class="value">$145,000</td>
+          <td>Mar 24</td>
+        </tr>
+        <tr>
+          <td>55 Danforth Ave, Toronto</td>
+          <td><span class="tag tag-basement">Basement</span></td>
+          <td class="value">$48,200</td>
+          <td>Mar 25</td>
+        </tr>
+        <tr>
+          <td>1890 Lawrence Ave E, Toronto</td>
+          <td><span class="tag tag-hvac">HVAC</span></td>
+          <td class="value">$22,500</td>
+          <td>Mar 25</td>
+        </tr>
+        <tr>
+          <td>312 Bathurst St, Toronto</td>
+          <td><span class="tag tag-new">New Build</span></td>
+          <td class="value">$2,100,000</td>
+          <td>Mar 26</td>
+        </tr>
+        <tr>
+          <td>94 Roncesvalles Ave, Toronto</td>
+          <td><span class="tag tag-deck">Deck</span></td>
+          <td class="value">$18,900</td>
+          <td>Mar 26</td>
+        </tr>
+        <tr>
+          <td>1105 Yonge St, Toronto</td>
+          <td><span class="tag tag-hvac">HVAC</span></td>
+          <td class="value">$31,200</td>
+          <td>Mar 27</td>
+        </tr>
+        <tr class="more-row"><td colspan="4">+ 5 more permits in your area this week</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <span class="section-icon">⚡</span>
+      <span class="section-title">Weather Digest</span>
+      <span class="section-count">This week in Toronto</span>
+    </div>
+    <div class="weather-box">
+      <div class="weather-item">
+        <span class="weather-icon">🌬️</span>
+        <span><strong>Mar 25:</strong> Wind advisory — gusts up to 75 km/h. Below damage threshold (80 km/h).</span>
+      </div>
+      <div class="weather-item">
+        <span class="weather-icon">🌧️</span>
+        <span><strong>Mar 27:</strong> Heavy rain warning — 45mm expected Sat–Sun. Monitor for basement flooding in low-lying areas.</span>
+      </div>
+      <div class="weather-note">✅ No qualifying storm events this week. You'll be alerted if conditions change.</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-text">
+      SiteSignal Starter · Toronto · HVAC<br>
+      <a href="#">Manage subscription</a> · <a href="#">Unsubscribe</a><br><br>
+      © 2026 L Consulting · sitesignal.ca · London, ON
+    </div>
+  </div>
+</div>
+</body>
+</html>
